@@ -19,7 +19,7 @@ end
 
 def PickRandomCards(players, card_deck, cards_for_each)
   player_deck = []
-  for i in 0..players
+  for i in 0..players - 1
     player_cards = card_deck.sample(cards_for_each)
     card_deck =  RemoveCardsFromDeck(card_deck, player_cards)
     player_deck.push(player_cards)
@@ -27,14 +27,24 @@ def PickRandomCards(players, card_deck, cards_for_each)
   return player_deck
 end
 
+def ArrangeTeamCard(player_deck, teams)
+  team_deck = []
+  for i in 0..player_deck.size - teams - 1
+    team_deck.push([player_deck[i], player_deck[i + teams]])
+  end
+  return team_deck
+end
+
+
 def main()
   card_deck = []
   players = 6
+  teams = 3
   cards_for_each = 5
   GenerateCardDeck(card_deck)
-  puts card_deck.length
-  random_cards = PickRandomCards(players, card_deck, cards_for_each)
-  puts card_deck.length
+  player_deck = PickRandomCards(players, card_deck, cards_for_each)
+  team_deck = ArrangeTeamCard(player_deck, teams)
+  print team_deck
 end
 
 main()
